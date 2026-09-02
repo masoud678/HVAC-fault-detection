@@ -1,24 +1,41 @@
 supply_air_temperature = 25
 setpoint = 14
 outdoor_air_temperature = 20
+cooling_command = 100
 
-difference = supply_air_temperature - setpoint
+
+def detect_cooling_fault(supply_air_temperature, setpoint, cooling_command):
+    difference = supply_air_temperature - setpoint
+
+    if cooling_command >= 80 and difference > 8:
+        return "SEVERE FAULT: Major Cooling Performance Failure"
+
+    elif cooling_command >= 80 and difference > 5:
+        return "MODERATE FAULT: Cooling Performance Issue"
+
+    elif difference <= 3:
+        return "NORMAL: System Operating Normally"
+
+    elif difference <= 5:
+        return "WARNING: Temperature Deviation"
+
+    else:
+        return "WARNING: Temperature Deviation"
+
+
+result = detect_cooling_fault(
+    supply_air_temperature,
+    setpoint,
+    cooling_command
+)
 
 print("HVAC Fault Detection")
 print("--------------------")
 print(f"Supply Air Temperature: {supply_air_temperature}°C")
 print(f"Setpoint: {setpoint}°C")
 print(f"Outdoor Air Temperature: {outdoor_air_temperature}°C")
+
+difference = supply_air_temperature - setpoint
 print(f"Temperature Difference: {difference}°C")
 
-if outdoor_air_temperature > 25 and difference > 5:
-    print("FAULT: Possible Cooling Failure")
-
-elif difference <= 3:
-    print("System Status: Normal")
-
-elif difference <= 5:
-    print("WARNING: Temperature Deviation")
-
-else:
-    print("WARNING: Temperature Deviation")
+print(result)
