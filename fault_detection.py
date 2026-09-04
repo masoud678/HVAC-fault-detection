@@ -1,10 +1,25 @@
-supply_air_temperature = 25
+supply_air_temperature = 100
 setpoint = 14
 outdoor_air_temperature = 20
 cooling_command = 100
 
 
+def validate_supply_air_temperature(supply_air_temperature):
+    if supply_air_temperature < -20 or supply_air_temperature > 60:
+        return "SENSOR FAULT: Invalid Supply Air Temperature"
+
+    return "SENSOR STATUS: Valid"
+
+
 def detect_cooling_fault(supply_air_temperature, setpoint, cooling_command):
+
+    sensor_status = validate_supply_air_temperature(
+        supply_air_temperature
+    )
+
+    if sensor_status != "SENSOR STATUS: Valid":
+        return sensor_status
+
     difference = supply_air_temperature - setpoint
 
     if cooling_command >= 80 and difference > 8:
@@ -28,6 +43,7 @@ result = detect_cooling_fault(
     setpoint,
     cooling_command
 )
+
 
 print("HVAC Fault Detection")
 print("--------------------")
