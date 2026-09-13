@@ -1,223 +1,310 @@
 # HVAC Fault Detection & AI Diagnostic System
 
-A comprehensive evolution from basic Python fault detection to production AI-powered HVAC service automation.
+An evolving HVAC automation project that combines traditional fault detection, AI-assisted troubleshooting, and automated service lead management.
+
+The project demonstrates how HVAC domain knowledge can be progressively integrated with Python, cloud automation, AI reasoning, and operational workflows.
 
 ---
 
-## 📊 Project Evolution Map
+## 📊 Project Evolution
 
 ### **Level 1 — HVAC Fault Detection** ✅
-*Foundation: Rule-based temperature monitoring*
 
-Basic Python logic detecting HVAC faults using supply air temperature, setpoint, and cooling command.
+*Foundation: Rule-based fault detection*
+
+A Python-based fault detection system using HVAC operating data such as supply air temperature, setpoint, and cooling command.
 
 **Technology:** Python | Git
-**Status:** Complete (see `fault_detection.py`)
-**Purpose:** Proof-of-concept for fault detection logic
+**Status:** Complete
+**File:** `fault_detection.py`
+
+**Purpose:**
+
+* Demonstrate HVAC fault-detection logic
+* Validate sensor data before analysis
+* Classify fault severity
+* Establish the foundation for future diagnostic intelligence
 
 ---
 
 ### **Level 2 — AI HVAC Troubleshooting Assistant** ✅
-*Scaling: Cloud-based AI reasoning for technician support*
 
-Converts service requests into AI-assisted diagnostic briefs with detailed reasoning.
+*AI-assisted diagnostic reasoning for HVAC service requests*
 
-**What happens:**
-1. Technician submits service request (system type, problem, urgency)
-2. n8n webhook captures and transforms request data
-3. Claude AI applies HVAC expertise:
-   - Identifies probable faults
-   - Suggests likely causes
-   - Identifies missing diagnostic information
-   - Recommends next best test
-4. System formats technician brief (Telegram + Google Sheets + Email)
-5. Dispatch team acts with AI-informed guidance
+Converts HVAC service requests into structured diagnostic briefs that can assist technicians and dispatch teams.
+
+**Workflow:**
+
+1. A service request is submitted with system and problem information.
+2. n8n captures and transforms the request.
+3. AI analyzes the available HVAC information.
+4. The system identifies:
+
+   * Probable faults
+   * Possible causes
+   * Missing diagnostic information
+   * Recommended next diagnostic test
+5. A structured technician brief is generated.
+6. Results can be delivered through Telegram, Google Sheets, and email.
 
 **Key Components:**
-- **AI Reasoning:** Claude 3.5 Sonnet (HVAC domain knowledge)
-- **Workflow Automation:** n8n (cloud-based orchestration)
-- **Data Storage:** Google Sheets (service request log)
-- **Team Communication:** Telegram + Gmail (real-time dispatch)
 
-**Documentation:** See [`docs/ai-hvac-diagnostic-assistant/`](docs/ai-hvac-diagnostic-assistant/)
+* **AI Reasoning:** Claude
+* **Workflow Automation:** n8n Cloud
+* **Data Storage:** Google Sheets
+* **Communication:** Telegram + Gmail
+
+**Documentation:**
+[`docs/ai-hvac-diagnostic-assistant/`](docs/ai-hvac-diagnostic-assistant/)
 
 ---
 
 ### **Level 3 — AI HVAC Lead Management** ✅
-*Optimization: Automated customer lead scoring & prioritization*
 
-Converts customer inquiries into priority-scored leads with instant response routing.
+*Automated customer intake, lead qualification, and priority routing*
 
-**What happens:**
-1. Customer submits HVAC request via Tally form
-2. n8n webhook receives form data
-3. Claude AI scores the lead:
-   - Fault classification
-   - Severity level (CRITICAL/HIGH/MEDIUM/LOW)
-   - Priority score (0-100)
-   - Service urgency assessment
-4. Lead automatically saved to CRM (Google Sheets)
-5. Instant notifications:
-   - Customer receives confirmation email
-   - Dispatch team gets Telegram alert with score
-6. Response routing based on priority (1 hour for CRITICAL, 24h for MEDIUM)
+Converts incoming HVAC customer requests into structured, prioritized leads.
+
+**Workflow:**
+
+1. Customer submits an HVAC request through a Tally form.
+2. n8n receives and processes the form submission.
+3. AI analyzes the request and determines:
+
+   * HVAC fault classification
+   * Severity level
+   * Priority score
+   * Service urgency
+4. The lead is recorded in Google Sheets.
+5. Automated notifications are sent to the appropriate channels.
+6. The customer receives an automated confirmation.
+7. Dispatch teams receive structured lead information for follow-up.
 
 **Key Components:**
-- **Lead Capture:** Tally forms (customer-friendly intake)
-- **AI Scoring:** Claude 3.5 Sonnet (HVAC fault + urgency reasoning)
-- **Workflow Automation:** n8n (sub-second lead processing)
-- **CRM:** Google Sheets (lead database + scoring history)
-- **Dispatch:** Telegram notifications (real-time alerts)
 
-**Documentation:** See [`docs/ai-hvac-lead-management/`](docs/ai-hvac-lead-management/)
+* **Lead Capture:** Tally
+* **AI Analysis:** Claude
+* **Workflow Automation:** n8n Cloud
+* **CRM / Data Storage:** Google Sheets
+* **Team Notifications:** Telegram
+* **Customer Communication:** Gmail
+
+**Documentation:**
+[`docs/ai-hvac-lead-management/`](docs/ai-hvac-lead-management/)
 
 ---
 
-### **Future — HVAC Diagnostic Intelligence** 🚀
-*Vision: Company-wide knowledge base + continuous learning*
+## 🚀 Future — HVAC Diagnostic Intelligence
 
-Building on Levels 2 & 3:
-- Confirmed case repository (technician-validated resolutions)
-- Knowledge matching (new requests against historical cases)
-- Continuous improvement (pattern detection across all service data)
-- Predictive diagnostics (what tests predict successful resolution)
-- Team learning system (automatic brief generation from success patterns)
+The next stage is to connect individual diagnostic cases into a structured company knowledge system.
+
+The planned system will include:
+
+* Technician-validated diagnosis and resolution records
+* Historical case matching
+* Diagnostic pattern recognition
+* Evidence-based troubleshooting
+* Recommended next-best tests
+* Confidence scoring
+* Technician verification
+* Reusable diagnostic knowledge
+* Continuous improvement from confirmed service cases
+
+### Planned Diagnostic Intelligence Loop
+
+```text
+Customer / Technician Request
+            ↓
+      Extract Information
+            ↓
+      Safety & Data Quality
+            ↓
+    Identify Missing Information
+            ↓
+      Retrieve Relevant Knowledge
+            ↓
+       Diagnostic Reasoning
+            ↓
+      Possible Causes + Evidence
+            ↓
+       Next Best Test
+            ↓
+       Confidence Assessment
+            ↓
+      Technician Verification
+            ↓
+       Confirmed Diagnosis
+            ↓
+     Diagnostic Case Memory
+            ↓
+      Future Case Matching
+```
+
+The goal is to evolve from simple automation into an HVAC service intelligence system that can support technicians, dispatchers, and service operations.
 
 ---
 
 ## 🏗️ Architecture Overview
 
-```
+```text
 CUSTOMER / TECHNICIAN REQUEST
-         │
-         ▼
-    [TALLY FORM] or [SERVICE REQUEST FORM]
-         │
-         ▼
-    [n8n WEBHOOK] ──────────────────┬─────────────────┐
-         │                          │                 │
-         ├──► Level 3: Lead Intake  │                 │
-         │    (AI Scoring)          │                 │
-         │                          │                 │
-         └──► Level 2: Diagnostic   │                 │
-              Request               │                 │
-              (AI Reasoning)        │                 │
-                                    ▼                 ▼
-                            [CLAUDE AI] ──► [GOOGLE SHEETS]
-                                    │
-                    ┌───────────────┼───────────────┐
-                    ▼               ▼               ▼
-            [TELEGRAM ALERT]  [EMAIL DISPATCH]  [CRM RECORD]
-                    │               │               │
-                    └───────────────┴───────────────┘
-                            │
-                            ▼
-                    [DISPATCH TEAM]
-                            │
-                    ┌───────┴───────┐
-                    ▼               ▼
-            [TECHNICIAN BRIEF]  [LEAD FOLLOW-UP]
+            │
+            ▼
+     [TALLY / SERVICE FORM]
+            │
+            ▼
+        [n8n WEBHOOK]
+            │
+      ┌─────┴─────┐
+      ▼           ▼
+ [LEAD INTAKE] [DIAGNOSTIC REQUEST]
+      │           │
+      └─────┬─────┘
+            ▼
+        [CLAUDE AI]
+            │
+      ┌─────┼──────────────┐
+      ▼     ▼              ▼
+ [ANALYSIS] [PRIORITY] [DIAGNOSTIC LOGIC]
+      │     │              │
+      └─────┴──────┬───────┘
+                   ▼
+            [GOOGLE SHEETS]
+                   │
+        ┌──────────┼──────────┐
+        ▼          ▼          ▼
+   [TELEGRAM]   [GMAIL]    [CRM RECORD]
+        │          │          │
+        └──────────┴──────────┘
+                   ▼
+             [SERVICE TEAM]
+                   │
+             ┌─────┴─────┐
+             ▼           ▼
+     [TECHNICIAN]   [FOLLOW-UP]
 ```
 
 ---
 
 ## 📁 Repository Structure
 
-```
+```text
 HVAC-fault-detection/
-├── README.md                           # This file
-├── fault_detection.py                  # Level 1: Python rule-based detection
+│
+├── README.md
+├── fault_detection.py
+├── DEPLOYMENT_SUMMARY.md
 │
 ├── docs/
 │   ├── ai-hvac-diagnostic-assistant/
-│   │   ├── README.md                   # Level 2 overview & architecture
-│   │   ├── workflow-architecture.md    # Detailed n8n workflow design
-│   │   ├── claude-reasoning-process.md # AI decision logic
-│   │   └── setup-guide.md              # Implementation steps
+│   │   ├── README.md
+│   │   ├── workflow-architecture.md
+│   │   ├── claude-reasoning-process.md
+│   │   └── setup-guide.md
 │   │
 │   └── ai-hvac-lead-management/
-│       ├── README.md                   # Level 3 overview & business case
-│       ├── workflow-architecture.md    # Lead scoring & routing
-│       ├── lead-scoring-criteria.md    # Severity classification
-│       └── setup-guide.md              # Tally + n8n configuration
+│       ├── README.md
+│       ├── workflow-architecture.md
+│       ├── lead-scoring-criteria.md
+│       └── setup-guide.md
 │
-└── .git/                               # Version history
+└── .git/
 ```
 
 ---
 
 ## 🚀 Getting Started
 
-### For Understanding the Project Evolution
-1. Read this README (you are here)
-2. Review `fault_detection.py` (Level 1 foundation)
-3. Explore `docs/` folders for Level 2 & 3 details
+### Understand the Project
 
-### For Implementing Level 2 (Diagnostic Assistant)
-See [`docs/ai-hvac-diagnostic-assistant/setup-guide.md`](docs/ai-hvac-diagnostic-assistant/setup-guide.md)
+Start with:
 
-### For Implementing Level 3 (Lead Management)
-See [`docs/ai-hvac-lead-management/setup-guide.md`](docs/ai-hvac-lead-management/setup-guide.md)
+1. This README
+2. `fault_detection.py` — Level 1 Python foundation
+3. `docs/ai-hvac-diagnostic-assistant/` — Level 2 AI troubleshooting system
+4. `docs/ai-hvac-lead-management/` — Level 3 lead management system
+5. `DEPLOYMENT_SUMMARY.md` — Overall implementation summary
+
+### Level 2 — Diagnostic Assistant
+
+See:
+
+[`docs/ai-hvac-diagnostic-assistant/setup-guide.md`](docs/ai-hvac-diagnostic-assistant/setup-guide.md)
+
+### Level 3 — Lead Management
+
+See:
+
+[`docs/ai-hvac-lead-management/setup-guide.md`](docs/ai-hvac-lead-management/setup-guide.md)
 
 ---
 
 ## 💡 Technology Stack
 
-| Component | Level 1 | Level 2 | Level 3 |
-|-----------|---------|---------|---------|
-| **Intake** | Python (local) | Service form | Tally (form) |
-| **Orchestration** | Python logic | n8n (cloud) | n8n (cloud) |
-| **AI Reasoning** | Rule-based | Claude 3.5 Sonnet | Claude 3.5 Sonnet |
-| **Storage** | In-memory | Google Sheets | Google Sheets |
-| **Output** | Console print | Telegram + Gmail | Telegram + Gmail |
-| **Response Time** | Instant | 2-5 seconds | 1-3 seconds |
+| Component         | Level 1      | Level 2          | Level 3          |
+| ----------------- | ------------ | ---------------- | ---------------- |
+| **Intake**        | Python       | Service Request  | Tally            |
+| **Orchestration** | Python       | n8n Cloud        | n8n Cloud        |
+| **AI / Logic**    | Rule-based   | Claude           | Claude           |
+| **Storage**       | Runtime data | Google Sheets    | Google Sheets    |
+| **Communication** | Console      | Telegram + Gmail | Telegram + Gmail |
+| **Automation**    | Local Python | Cloud workflow   | Cloud workflow   |
 
 ---
 
 ## 🔒 Security & Privacy
 
 This repository does **not** contain:
-- API keys or credentials
-- Customer personal information
-- Service technician contact details
-- Sensitive business data
 
-All configuration is managed through environment variables and secure credential storage in n8n.
+* API keys
+* Authentication credentials
+* Customer personal information
+* Technician contact information
+* Private business data
 
----
-
-## 📖 Project Philosophy
-
-This project is developed **incrementally and transparently**:
-
-- ✅ Each level is self-contained and testable
-- ✅ Each stage builds on the previous one
-- ✅ All work is committed with clear messages
-- ✅ Project evolution is fully documented
-- ✅ From simple Python → cloud AI → business automation
+Credentials and service connections are managed separately through secure configuration and credential-management systems.
 
 ---
 
-## 📞 Current Status (2026-09-13)
+## 📈 Project Development Philosophy
 
-| Level | Status | Last Updated |
-|-------|--------|--------------|
-| Level 1 (Python FDD) | ✅ Complete | 2026-09-08 |
-| Level 2 (Diagnostic AI) | ✅ Active | 2026-09-12 |
-| Level 3 (Lead Management) | ✅ Active | 2026-09-13 |
-| Future (Diagnostic Intelligence) | 🚀 In Design | — |
+The project is developed incrementally:
+
+* ✅ Start with simple HVAC logic
+* ✅ Validate data before making decisions
+* ✅ Add AI-assisted reasoning
+* ✅ Automate repetitive service workflows
+* ✅ Store structured operational data
+* ✅ Keep technician verification in the diagnostic loop
+* 🚀 Progress toward reusable HVAC diagnostic intelligence
+
+The objective is not to replace HVAC technicians.
+
+The objective is to **give HVAC service teams better information, faster workflows, and more consistent diagnostic support.**
 
 ---
 
-## 🤝 Contributing
+## 📊 Current Status
 
-The project follows git-based incremental development:
+| Level                                | Status       | Description                                   |
+| ------------------------------------ | ------------ | --------------------------------------------- |
+| **Level 1 — Python FDD**             | ✅ Complete   | Rule-based HVAC fault detection               |
+| **Level 2 — Diagnostic AI**          | ✅ Active     | AI-assisted troubleshooting workflow          |
+| **Level 3 — Lead Management**        | ✅ Active     | Automated HVAC lead qualification and routing |
+| **Future — Diagnostic Intelligence** | 🚀 In Design | Knowledge-based diagnostic intelligence       |
 
-1. Work on a feature/level
-2. Test thoroughly
-3. Commit with clear message
-4. Update relevant documentation
+---
+
+## 🤝 Development Workflow
+
+The project follows an incremental Git-based development process:
+
+1. Develop a feature
+2. Test the workflow
+3. Document the implementation
+4. Commit changes with clear messages
 5. Push to GitHub
+6. Continue building on the validated foundation
 
 ---
 
@@ -227,4 +314,4 @@ This project is part of Amran Consulting Ltd's HVAC AI initiative.
 
 ---
 
-**For detailed information on each level, see the documentation folders.**
+**HVAC knowledge → Python → AI reasoning → Workflow automation → Diagnostic intelligence**
